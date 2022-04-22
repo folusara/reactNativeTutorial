@@ -7,6 +7,7 @@ import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
+import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
 import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
 import com.mrhenshawnew.newarchitecture.MainApplicationReactNativeHost;
@@ -27,9 +28,19 @@ public class MainApplication extends Application implements ReactApplication {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
-          // packages.add(new MyReactNativePackage());
+          // packages.add(SafeAreaContextPackage());
           return packages;
         }
+        
+
+        // @Override
+        //   protected List<ReactPackage> getPackages() {
+        //       return Arrays.asList(
+                
+        //           new MainReactPackage(),
+        //           new SafeAreaContextPackage()
+        //       );
+// }
 
         @Override
         protected String getJSMainModuleName() {
