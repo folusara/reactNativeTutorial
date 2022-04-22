@@ -1,10 +1,11 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-sequences */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import {View,Button, StyleSheet, Text} from 'react-native';
 
-const HomeScreen: React.FC<Props> = ({navigation}) => {
+const HomeScreen: React.FC<any> = ({navigation}) => {
   return (
     <View style={styles.sectionContainer}>
       <Text style={styles.sectionTitle}>Home Screen</Text>
@@ -17,6 +18,10 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
             otherParam: 'anything you want here',
           });
         }}
+      />
+       <Button
+        title="Go to Details... again"
+        onPress={() => navigation.push('Products')}
       />
       <Button title="Go back" onPress={() => navigation.goBack()} />
     </View>
