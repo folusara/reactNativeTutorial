@@ -1,34 +1,64 @@
+/* eslint-disable jsx-quotes */
+/* eslint-disable semi */
 /* eslint-disable prettier/prettier */
-import React from 'react';
-import { StyleSheet, Text, View, Button} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
+import { Register } from '../service/request';
 
-const DetailsScreen = ({ route, navigation }) => {
-  const { itemId, otherParam } = route.params;
+const LoginScreen = ({ route, navigation }) => {
+  let [email, setEmail] = useState<string>('')
+  let [name, setName] = useState<string>('')
+  let [password, setPassword] = useState<string>('')
+  let [formData, setFormData] = useState({
+    email: '',
+    name: '',
+    password: '',
+  })
+
+ const handleEmailSubmit = (e:string) => {
+   setEmail(email = e)
+   console.log(email);
+   formData.email = email
+   setFormData(formData)
+ }
+ const handleNameSubmit = (e:string) => {
+  setName( name = e)
+  console.log(name);
+  formData.name = name
+   setFormData(formData)
+
+}
+const handlePasswordSubmit = (e:string) => {
+  setPassword(password = e)
+  console.log(password)
+  formData.password = password
+   setFormData(formData)
+}
+
+const handleFormSubmit = () => {
+  Register(formData).then((res:any)=>{
+    console.log(res);
+  }).catch((err:any)=>{
+    console.log(err);
+  });
+}
   return (
     <View style={styles.sectionContainer}>
-      <Text style={styles.sectionTitle}>Details Screen</Text>
-      <Text style={styles.sectionTitle}>item Id: {JSON.stringify(itemId)}</Text>
-      <Text style={styles.sectionTitle}>
-        Other param: {JSON.stringify(otherParam)}
-      </Text>
-      <Button
-        title="Go to Details... again"
-        onPress={() =>
-          navigation.push('Details', {
-            itemId: Math.floor(Math.random() * 100),
-          })
-        }
-      />
-      <Button
-        title="Go to Details... again"
-        onPress={() => navigation.push('Login')}
-      />
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
-      <Button title="Go back" onPress={() => navigation.goBack()} />
-      <Button
-        title="Go back to first screen in stack"
-        onPress={() => navigation.popToTop()}
-      />
+        <View>
+        <TextInput placeholder="Full Name"
+            style={styles.textInput}
+            onChangeText={handleNameSubmit}
+          />
+          <TextInput placeholder="Email"
+            style={styles.textInput}
+            onChangeText={handleEmailSubmit}
+          />
+          <TextInput placeholder="Password"
+            style={styles.textInput}
+            onChangeText={handlePasswordSubmit}
+          />
+          <Button title='sign up'  onPress={handleFormSubmit} />
+        </View>
     </View>
   );
 };
@@ -45,19 +75,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  textInput:{
+    height: 50,
+    width: 300,
+    borderStyle: 'solid',
+    borderColor: 'white',
+    margin:10,
+    borderWidth: 2,
+    fontSize: 20,
+    borderRadius: 10,
+    // backgroundColor: 'white',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+  button:{
+    height: 50,
+    width: 300,
+  }
 });
 
-export default DetailsScreen;
+export default LoginScreen;
 

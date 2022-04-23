@@ -2,7 +2,7 @@
 import axios from 'react-native-axios';
 
 var http = axios.create({
-    baseURL: 'https://fakestoreapi.com',
+    baseURL: 'https://firstfullstackbankapp.herokuapp.com',
     timeout: 1000,
     headers: {'X-Custom-Header': 'foobar'},
   });
