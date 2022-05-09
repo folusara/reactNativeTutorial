@@ -4,21 +4,22 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import {View,Button, StyleSheet, Text} from 'react-native';
+import MyButton from '../components/CustomButton';
 
 const HomeScreen: React.FC<any> = ({navigation}) => {
   return (
     <View style={styles.sectionContainer}>
       <Text style={styles.sectionTitle}>Home Screen</Text>
-      <Button
-        title="Go to login Details"
-        onPress={() => {
-          /* 1. Navigate to the Details route with params */
-          navigation.navigate('Login', {
-            itemId: 86,
-            otherParam: 'anything you want here',
-          });
-        }}
-      />
+      <MyButton  
+          title="Custom Button"
+          onPress={() => {
+            /* 1. Navigate to the Details route with params */
+            navigation.navigate('Login', {
+              itemId: 86,
+              otherParam: 'anything you want here',
+            });
+          }} />
+   
        <Button
         title="Go to Details... again"
         onPress={() => navigation.push('Products')}
