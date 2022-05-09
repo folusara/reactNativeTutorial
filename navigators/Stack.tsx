@@ -11,6 +11,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ProductsScreen from '../screens/Products';
 import ProductInfoScreen from '../screens/ProductInfo';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 export type ParamList = {
     Home: undefined;
@@ -19,7 +20,9 @@ export type ParamList = {
     ProductInfo: undefined
   };
 
-const {Navigator, Screen} = createBottomTabNavigator<ParamList>();
+// const {Navigator, Screen} = createBottomTabNavigator<ParamList>();
+const {Navigator, Screen} = createMaterialBottomTabNavigator<ParamList>();
+
 
 const Stack = () => {
   return (
@@ -27,7 +30,10 @@ const Stack = () => {
       <Navigator initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: '#e91e63',
-      }}>
+        // tabBarLabelStyle: {fontSize:20},
+        // tabBarShowLabel:false
+      }}
+      barStyle={{backgroundColor:'#694fad' }}>
         <Screen name="Home" component={HomeScreen}
           options={{
             tabBarLabel: 'Home',
@@ -38,6 +44,7 @@ const Stack = () => {
         <Screen name="Products"
           component={ProductsScreen}
           options={{
+            tabBarBadge:3,
             tabBarLabel: 'Products',
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="home" color={color} size={size} />
