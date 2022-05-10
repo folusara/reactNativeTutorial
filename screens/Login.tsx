@@ -2,8 +2,10 @@
 /* eslint-disable semi */
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, Alert} from 'react-native';
+import MyButton from '../components/CustomButton';
 import { Register } from '../service/request';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = ({ route, navigation }) => {
   let [email, setEmail] = useState<string>('')
@@ -35,7 +37,18 @@ const handlePasswordSubmit = (e:string) => {
    setFormData(formData)
 }
 
-const handleFormSubmit = () => {
+const handleFormSubmit = async () => {
+  if (name.length == 0) {
+    Alert.alert('Warning', 'Please write your name')
+  } else {
+    try {
+      await AsyncStorage.setItem('UserName', name)
+      navigation.navigate('Home')
+    } catch (error) {
+      
+    }
+  }
+  console.log(formData);
   Register(formData).then((res:any)=>{
     console.log(res);
   }).catch((err:any)=>{
@@ -49,15 +62,19 @@ const handleFormSubmit = () => {
             style={styles.textInput}
             onChangeText={handleNameSubmit}
           />
-          <TextInput placeholder="Email"
+          {/* <TextInput placeholder="Email"
             style={styles.textInput}
             onChangeText={handleEmailSubmit}
           />
           <TextInput placeholder="Password"
             style={styles.textInput}
             onChangeText={handlePasswordSubmit}
-          />
-          <Button title='sign up'  onPress={handleFormSubmit} />
+          /> */}
+           <MyButton
+          title="Submit"
+          onPressFunction ={handleFormSubmit} />
+
+          {/* <Button title='sign up'  onPress={handleFormSubmit} /> */}
         </View>
     </View>
   );
@@ -80,7 +97,10 @@ const styles = StyleSheet.create({
     width: 300,
     borderStyle: 'solid',
     borderColor: 'white',
+    textAlign: 'center',
     margin:10,
+    color: 'black',
+    backgroundColor: '#ffffff',
     borderWidth: 2,
     fontSize: 20,
     borderRadius: 10,

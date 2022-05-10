@@ -2,14 +2,36 @@
 /* eslint-disable no-sequences */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect, useState } from 'react';
 import {View,Button, StyleSheet, Text} from 'react-native';
 import MyButton from '../components/CustomButton';
 
 const HomeScreen: React.FC<any> = ({navigation}) => {
+  const [name, setName] = useState('');
+
+  useEffect(()=>{
+    getData()
+  },[]); 
+
+  const getData = async () =>{
+    try {
+      AsyncStorage.getItem('UserName')
+      .then(value => {
+        if (value != null) {
+          setName(value)
+        }
+      }).catch(err=>{
+        console.log(err);
+      });
+    } catch (error) {
+     console.log(error);
+      
+    }
+  };
   return (
     <View style={styles.sectionContainer}>
-      <Text style={styles.sectionTitle}>Home Screen</Text>
+      <Text style={styles.sectionTitle}>Welcome {name}</Text>
       <MyButton  
           title="Custom Button"
           onPress={() => {
@@ -19,13 +41,7 @@ const HomeScreen: React.FC<any> = ({navigation}) => {
               otherParam: 'anything you want here',
             });
           }} />
-   
-       <Button
-        title="Go to Details... again"
-        onPress={() => navigation.push('Products')}
-      />
-      <Button title="Go back" onPress={() => navigation.goBack()} />
-    </View>
+   </View>
   );
 };
 
@@ -41,7 +57,9 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 24,
-    fontWeight: '600',
+    // fontWeight: '600',
+    fontFamily:'Inter-Thin',
+
   },
   sectionDescription: {
     marginTop: 8,

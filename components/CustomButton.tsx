@@ -5,7 +5,7 @@ import { Pressable, StyleSheet, Text } from 'react-native';
 function MyButton(props) {
     return ( 
         <Pressable
-            onPress={props.onPress}
+            onPress={props.onPressFunction}
             hitSlop={{top:10, bottom:10, right:10, left:10}} 
             android_ripple={{color: '#00f'}}
             style={({pressed})=>[
@@ -13,7 +13,7 @@ function MyButton(props) {
                 styles.button
             ]}>
                 <Text style={styles.text}>
-                    {props.title ? 'Clear' : 'Submit'}
+                    {props.title}
                 </Text> 
         </Pressable>
      );
@@ -21,8 +21,9 @@ function MyButton(props) {
 
 const styles = StyleSheet.create({
     button:{
-        width:150,
+        width:300,
         height: 50,
+        borderRadius:10
     },
     text:{
         color:'#000000',
