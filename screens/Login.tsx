@@ -1,59 +1,80 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-quotes */
 /* eslint-disable semi */
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, Alert} from 'react-native';
 import MyButton from '../components/CustomButton';
-import { Register } from '../service/request';
+// import { Register } from '../service/request';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector, useDispatch } from 'react-redux';
+import UserReducer from '../redux/reducers';
+import { setName, setEmail, setPassword  } from '../redux/action';
 
-const LoginScreen = ({ route, navigation }) => {
-  let [email, setEmail] = useState<string>('')
-  let [name, setName] = useState<string>('')
-  let [password, setPassword] = useState<string>('')
-  let [formData, setFormData] = useState({
-    email: '',
-    name: '',
-    password: '',
-  })
+const LoginScreen = () => {
+
+  const {name, email , password} = useSelector((state:any) => state.UserReducer)
+  const dispatch = useDispatch()
+
+
 
  const handleEmailSubmit = (e:string) => {
-   setEmail(email = e)
-   console.log(email);
-   formData.email = email
-   setFormData(formData)
+  dispatch(setEmail(e));
  }
  const handleNameSubmit = (e:string) => {
-  setName( name = e)
-  console.log(name);
-  formData.name = name
-   setFormData(formData)
-
+  dispatch(setName(e));
 }
 const handlePasswordSubmit = (e:string) => {
-  setPassword(password = e)
-  console.log(password)
-  formData.password = password
-   setFormData(formData)
+  dispatch(setPassword(e));
 }
 
+useEffect(()=>{
+  getData();
+},[]);
+
+const getData = async () =>{
+  try {
+    AsyncStorage.getItem('UserName')
+    .then(value => {
+      if (value != null) {
+        navigation.navigate('Home')
+      }
+    }).catch(err=>{
+      console.log(err);
+    });
+  } catch (error) {
+   console.log(error);
+  }
+};
+
 const handleFormSubmit = async () => {
-  if (name.length == 0) {
+  if (name.length === 0 || email.length === 0 || password.length === 0 ) {
     Alert.alert('Warning', 'Please write your name')
   } else {
     try {
-      await AsyncStorage.setItem('UserName', name)
+
+      dispatch(setName(name));
+      dispatch(setEmail(email));
+      dispatch(setPassword(password));
+
+      // let formData = {
+      //   name: name,
+      //   email: email,
+      //   password: password
+      // }
+      // await AsyncStorage.setItem('User', JSON.stringify(formData))
       navigation.navigate('Home')
     } catch (error) {
+      console.log(error);
       
     }
   }
-  console.log(formData);
-  Register(formData).then((res:any)=>{
-    console.log(res);
-  }).catch((err:any)=>{
-    console.log(err);
-  });
+  // console.log(formData);
+  // Register(formData).then((res:any)=>{
+  //   console.log(res);
+  // }).catch((err:any)=>{
+  //   console.log(err);
+  // });
 }
   return (
     <View style={styles.sectionContainer}>
@@ -62,14 +83,14 @@ const handleFormSubmit = async () => {
             style={styles.textInput}
             onChangeText={handleNameSubmit}
           />
-          {/* <TextInput placeholder="Email"
+          <TextInput placeholder="Email"
             style={styles.textInput}
             onChangeText={handleEmailSubmit}
           />
           <TextInput placeholder="Password"
             style={styles.textInput}
             onChangeText={handlePasswordSubmit}
-          /> */}
+          />
            <MyButton
           title="Submit"
           onPressFunction ={handleFormSubmit} />

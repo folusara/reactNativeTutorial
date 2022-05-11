@@ -27,7 +27,7 @@ const {Navigator, Screen} = createMaterialBottomTabNavigator<ParamList>();
 const Stack = () => {
   return (
     <NavigationContainer>
-      <Navigator initialRouteName="Home"
+      <Navigator initialRouteName="Login"
       screenOptions={{
         tabBarActiveTintColor: '#e91e63',
         // tabBarLabelStyle: {fontSize:20},

@@ -4,22 +4,27 @@
 /* eslint-disable prettier/prettier */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
-import {View,Button, StyleSheet, Text} from 'react-native';
+import {View,Button, StyleSheet, Text, Alert, TextInput} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import MyButton from '../components/CustomButton';
 
-const HomeScreen: React.FC<any> = ({navigation}) => {
-  const [name, setName] = useState('');
+const HomeScreen = ({ navigation }:any) => {
+  const {name, email , password} = useSelector((state:any)=> state.userReducer)
+  const dispatch = useDispatch();
 
   useEffect(()=>{
-    getData()
+    getData();
   },[]); 
 
   const getData = async () =>{
     try {
-      AsyncStorage.getItem('UserName')
+      AsyncStorage.getItem('User')
       .then(value => {
         if (value != null) {
-          setName(value)
+          let user = JSON.parse(value)
+          setName(user.name);
+          setEmail(user.email);
+          setPassword(user.password);
         }
       }).catch(err=>{
         console.log(err);
@@ -29,20 +34,42 @@ const HomeScreen: React.FC<any> = ({navigation}) => {
       
     }
   };
+
+  const upDateData = async () =>{
+    if (name.length === 0) {
+      Alert.alert('Warning', 'Please write your name')
+    } else {
+      try {
+        await AsyncStorage.setItem('UserName', name);
+        Alert.alert('Success!', 'Your name has been updated!');
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+  const removeData = async () =>{
+    try {
+      await AsyncStorage.removeItem('UserName');
+      navigation.navigate('Login');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <View style={styles.sectionContainer}>
-      <Text style={styles.sectionTitle}>Welcome {name}</Text>
-      <MyButton  
-          title="Custom Button"
-          onPress={() => {
-            /* 1. Navigate to the Details route with params */
-            navigation.navigate('Login', {
-              itemId: 86,
-              otherParam: 'anything you want here',
-            });
-          }} />
+      <Text style={styles.sectionTitle}>Welcome {name}, your email is {email},
+      and password is {password}</Text>
+      <TextInput style={styles.textInput}
+        placeholder="Update your name"
+        value={name} 
+        onChangeText={(data) => dispatch(setName(data))}
+      />
+      <MyButton color='#ff7f00' title="Update Name" onPressFunction={upDateData}  />
+      <MyButton  title="Remove Name"  onPressFunction={removeData}  />
    </View>
   );
+
 };
 
 const styles = StyleSheet.create({
@@ -54,6 +81,20 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  textInput:{
+    height: 50,
+    width: 300,
+    borderStyle: 'solid',
+    borderColor: 'white',
+    textAlign: 'center',
+    margin:10,
+    color: 'black',
+    backgroundColor: '#ffffff',
+    borderWidth: 2,
+    fontSize: 20,
+    borderRadius: 10,
+    // backgroundColor: 'white',
   },
   sectionTitle: {
     fontSize: 24,
