@@ -6,11 +6,11 @@ import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 
 const ProductInfoScreen: React.FC<any> = ({route}) => {
-    const { productsId,  productName} = route.params;
+    // const { productsId,  productName} = route.params;
   return (
     <View style={{backgroundColor:'black'}}>
-         <Text style={{color:'black'}}>itemId: {JSON.stringify(productsId)}</Text>
-        <Text>otherParam: {JSON.stringify(productName)}</Text>
+         {/* <Text style={{color:'black'}}>itemId: {JSON.stringify(productsId)}</Text>
+        <Text>otherParam: {JSON.stringify(productName)}</Text> */}
     </View>
   );
 };

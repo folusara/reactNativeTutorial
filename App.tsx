@@ -2,12 +2,18 @@
 import * as React from 'react';
 import Intro from './components/Intro';
 import Stack from './navigators/Stack';
+import { Provider } from 'react-redux';
+import { Store } from './redux/store';
 
 const App = () => {
   const [showRealApp, setShowRealApp] = React.useState<boolean>(false);
 
   if(showRealApp){
-    return <Stack />;
+    return (
+      <Provider store={Store}>
+        <Stack />
+      </Provider>
+    );
   }else {
     return <Intro setShowRealApp={setShowRealApp} />;
   }

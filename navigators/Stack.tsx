@@ -4,11 +4,14 @@ import {NavigationContainer} from '@react-navigation/native';
 import HomeScreen from '../screens/Home';
 // eslint-disable-next-line prettier/prettier
 import LoginScreen from '../screens/Login';
-import {
-  createNativeStackNavigator,
-} from '@react-navigation/native-stack';
+// import {
+//   createNativeStackNavigator,
+// } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ProductsScreen from '../screens/Products';
 import ProductInfoScreen from '../screens/ProductInfo';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 export type ParamList = {
     Home: undefined;
@@ -17,19 +20,60 @@ export type ParamList = {
     ProductInfo: undefined
   };
 
-const {Navigator, Screen} = createNativeStackNavigator<ParamList>();
+// const {Navigator, Screen} = createBottomTabNavigator<ParamList>();
+const {Navigator, Screen} = createMaterialBottomTabNavigator<ParamList>();
+
 
 const Stack = () => {
   return (
     <NavigationContainer>
+<<<<<<< HEAD
       <Navigator initialRouteName="Login" screenOptions={{}}>
         <Screen name="Home" component={HomeScreen} options={{title: 'Home'}} />
         <Screen name="Products" component={ProductsScreen} options={{title: 'Products'}} />
         <Screen name="ProductInfo" component={ProductInfoScreen} options={{title: 'ProductsInfo'}} />
+=======
+      <Navigator initialRouteName="Login"
+      screenOptions={{
+        tabBarActiveTintColor: '#e91e63',
+        // tabBarLabelStyle: {fontSize:20},
+        // tabBarShowLabel:false
+      }}
+      barStyle={{backgroundColor:'#694fad' }}>
+        <Screen name="Home" component={HomeScreen}
+          options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+          }} />
+        <Screen name="Products"
+          component={ProductsScreen}
+          options={{
+            tabBarBadge:3,
+            tabBarLabel: 'Products',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+          }} 
+         />
+        <Screen name="ProductInfo" component={ProductInfoScreen} 
+         options={{
+          tabBarLabel: 'ProductInfo',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}  />
+>>>>>>> 244b06eabeff5bf8511a6ea4695a49af13c5db9b
         <Screen
           name="Login"
           component={LoginScreen}
-          options={{title: 'Login'}}
+          options={{
+            tabBarLabel: 'ProductInfo',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+          }}
         />
       </Navigator>
     </NavigationContainer>
