@@ -1,46 +1,49 @@
 /* eslint-disable jsx-quotes */
 /* eslint-disable semi */
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
-import { Register } from '../service/request';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Button, TextInput, Alert} from 'react-native';
 
 const LoginScreen = ({ route, navigation }) => {
-  let [email, setEmail] = useState<string>('')
   let [name, setName] = useState<string>('')
-  let [password, setPassword] = useState<string>('')
-  let [formData, setFormData] = useState({
-    email: '',
-    name: '',
-    password: '',
-  })
 
- const handleEmailSubmit = (e:string) => {
-   setEmail(email = e)
-   console.log(email);
-   formData.email = email
-   setFormData(formData)
- }
+  useEffect(()=>{
+    getData()
+  },[]);
+  const getData = async () =>{
+    try {
+     await AsyncStorage.getItem('name')
+     .then(value=>{
+       if (value != null) {
+      navigation.navigate('Home')
+       }
+     })
+    } catch (error) {
+      console.log(error );
+      
+    }
+  }
+
+
+
  const handleNameSubmit = (e:string) => {
   setName( name = e)
-  console.log(name);
-  formData.name = name
-   setFormData(formData)
+  console.log(name)
 
 }
-const handlePasswordSubmit = (e:string) => {
-  setPassword(password = e)
-  console.log(password)
-  formData.password = password
-   setFormData(formData)
-}
 
-const handleFormSubmit = () => {
-  Register(formData).then((res:any)=>{
-    console.log(res);
-  }).catch((err:any)=>{
-    console.log(err);
-  });
+const handleFormSubmit = async ()  => {
+  if (name.length === 0){
+    Alert.alert('Warning', 'please write a name')
+  } else {
+    try {
+      await AsyncStorage.setItem('name',name)
+      navigation.navigate('Home')
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
   return (
     <View style={styles.sectionContainer}>
@@ -49,15 +52,7 @@ const handleFormSubmit = () => {
             style={styles.textInput}
             onChangeText={handleNameSubmit}
           />
-          <TextInput placeholder="Email"
-            style={styles.textInput}
-            onChangeText={handleEmailSubmit}
-          />
-          <TextInput placeholder="Password"
-            style={styles.textInput}
-            onChangeText={handlePasswordSubmit}
-          />
-          <Button title='sign up'  onPress={handleFormSubmit} />
+          <Button title='Login'  onPress={handleFormSubmit} />
         </View>
     </View>
   );
@@ -83,8 +78,9 @@ const styles = StyleSheet.create({
     margin:10,
     borderWidth: 2,
     fontSize: 20,
+    color: 'black',
     borderRadius: 10,
-    // backgroundColor: 'white',
+    backgroundColor: 'white',
   },
   button:{
     height: 50,

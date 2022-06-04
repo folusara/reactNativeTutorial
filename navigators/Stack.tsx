@@ -22,7 +22,7 @@ const {Navigator, Screen} = createNativeStackNavigator<ParamList>();
 const Stack = () => {
   return (
     <NavigationContainer>
-      <Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
+      <Navigator initialRouteName="Login" screenOptions={{}}>
         <Screen name="Home" component={HomeScreen} options={{title: 'Home'}} />
         <Screen name="Products" component={ProductsScreen} options={{title: 'Products'}} />
         <Screen name="ProductInfo" component={ProductInfoScreen} options={{title: 'ProductsInfo'}} />
