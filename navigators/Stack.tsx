@@ -20,26 +20,21 @@ export type ParamList = {
     ProductInfo: undefined
   };
 
-// const {Navigator, Screen} = createBottomTabNavigator<ParamList>();
-const {Navigator, Screen} = createMaterialBottomTabNavigator<ParamList>();
+const {Navigator, Screen} = createBottomTabNavigator<ParamList>();
+// const {Navigator, Screen} = createMaterialBottomTabNavigator<ParamList>();
 
 
 const Stack = () => {
   return (
     <NavigationContainer>
-<<<<<<< HEAD
-      <Navigator initialRouteName="Login" screenOptions={{}}>
-        <Screen name="Home" component={HomeScreen} options={{title: 'Home'}} />
-        <Screen name="Products" component={ProductsScreen} options={{title: 'Products'}} />
-        <Screen name="ProductInfo" component={ProductInfoScreen} options={{title: 'ProductsInfo'}} />
-=======
       <Navigator initialRouteName="Login"
       screenOptions={{
         tabBarActiveTintColor: '#e91e63',
         // tabBarLabelStyle: {fontSize:20},
         // tabBarShowLabel:false
       }}
-      barStyle={{backgroundColor:'#694fad' }}>
+      // barStyle={{backgroundColor:'#694fad' }}
+      >
         <Screen name="Home" component={HomeScreen}
           options={{
             tabBarLabel: 'Home',
@@ -64,7 +59,6 @@ const Stack = () => {
             <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
         }}  />
->>>>>>> 244b06eabeff5bf8511a6ea4695a49af13c5db9b
         <Screen
           name="Login"
           component={LoginScreen}
