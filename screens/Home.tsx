@@ -6,9 +6,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import {View,Button, StyleSheet, Text, Alert, TextInput} from 'react-native';
 import MyButton from '../components/CustomButton';
+import {  useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 const HomeScreen = ({ navigation }:any) => {
-  const [name, setName] = useState('')
+  // const [name, setName] = useState('')
+  const {name}  = useSelector((state:RootState) => state.name);
+const { count } =  useSelector((state:RootState) => state.count);
   useEffect(()=>{
     getData();
   },[]); 
@@ -53,6 +57,8 @@ const HomeScreen = ({ navigation }:any) => {
   return (
     <View style={styles.sectionContainer}>
       <Text style={styles.sectionTitle}>Welcome {name}</Text>
+      <Text style={styles.text}>{count}</Text>
+      <Text style={styles.text}>{name}</Text>
       <TextInput style={styles.textInput}
         placeholder="Update your name"
         value={name} 
@@ -73,6 +79,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  text:{
+    color: 'white'
   },
   textInput:{
     height: 50,

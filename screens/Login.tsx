@@ -7,12 +7,21 @@ import { StyleSheet, Text, View, Button, TextInput, Alert} from 'react-native';
 import MyButton from '../components/CustomButton';
 // import { Register } from '../service/request';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from 'react-redux';
+import { setName } from '../redux/nameSlice'
+import { RootState } from '../redux/store';
+import { setCount } from '../redux/countSlice';
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({navigation}:any) => {
 
+  let [nameValue, setNameValue] = useState('');
 useEffect(()=>{
   getData();
 },[]);
+
+const dispatch = useDispatch();
+const {name}  = useSelector((state:RootState) => state.name);
+const { count } =  useSelector((state:RootState) => state.count);
 
 const getData = async () =>{
   try {
@@ -30,17 +39,18 @@ const getData = async () =>{
 };
 
 const handleFormSubmit = async () => {
-  if (name.length === 0) {
+  if (nameValue.length === 0) {
     Alert.alert('Warning', 'Please write your name')
   } else {
     try {
-
       // let formData = {
       //   name: name,
       //   email: email,
       //   password: password
       // }
       // await AsyncStorage.setItem('User', JSON.stringify(formData))
+      dispatch(setName(nameValue))
+      dispatch(setCount(1))
       navigation.navigate('Home')
     } catch (error) {
       console.log(error);
@@ -56,9 +66,11 @@ const handleFormSubmit = async () => {
   return (
     <View style={styles.sectionContainer}>
         <View>
+           <Text style={styles.text}>{count}</Text>
+          <Text style={styles.text}>{name}</Text>
         <TextInput placeholder="Full Name"
             style={styles.textInput}
-            // onChangeText={handleNameSubmit}
+            onChangeText={(e)=>{setNameValue(e)}}
           />
            <MyButton
           title="Submit"
@@ -82,6 +94,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  text:{
+    color: 'white'
+  },
   textInput:{
     height: 50,
     width: 300,
@@ -93,9 +108,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderWidth: 2,
     fontSize: 20,
-    color: 'black',
     borderRadius: 10,
-    backgroundColor: 'white',
   },
   button:{
     height: 50,
