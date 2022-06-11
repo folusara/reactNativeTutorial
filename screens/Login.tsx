@@ -28,11 +28,11 @@ const { count } =  useSelector((state:RootState) => state.count);
 const createChannel = () =>{
   PushNotification.createChannel(
       {
-        channelId: "channel-id", // (required)
-        channelName: "My channel", // (required)
-        channelDescription: "A channel to categorise your notifications", // (optional) default: undefined.
+        channelId: 'channel-id', // (required)
+        channelName: 'My channel', // (required)
+        channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
         playSound: true, // (optional) default: true
-        soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+        soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
         // importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
       },
@@ -45,6 +45,17 @@ const handleNotifications = (nameValue:string) => {
     channelId: 'channel-id', // (required)
     title: `You entered the name ${nameValue} `,
     message: `Yes, you did it bro!. The name is ${nameValue}`,
+    bigText: `${nameValue} is the greatest dev there will ever be!`,
+    color: 'red',
+    index: 1
+  });
+
+  PushNotification.localNotificationSchedule({
+    channelId: 'channel-id',
+    title: 'Alarm',
+    message: 'You clicked on the notification button 20 seconds ago',
+    date: new Date(Date.now() + 5 * 1000),
+    allowWhileIdle: true,
   })
 }
 
