@@ -291,7 +291,7 @@ dependencies {
         releaseImplementation files(hermesPath + "hermes-release.aar")
     } else {
         implementation jscFlavor
-    }
+    } 
 }
 
 if (isNewArchitectureEnabled()) {

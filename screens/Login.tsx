@@ -11,17 +11,42 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setName } from '../redux/nameSlice'
 import { RootState } from '../redux/store';
 import { setCount } from '../redux/countSlice';
+import PushNotification from 'react-native-push-notification';
 
 const LoginScreen = ({navigation}:any) => {
 
   let [nameValue, setNameValue] = useState('');
 useEffect(()=>{
   getData();
+  createChannel()
 },[]);
 
 const dispatch = useDispatch();
 const {name}  = useSelector((state:RootState) => state.name);
 const { count } =  useSelector((state:RootState) => state.count);
+
+const createChannel = () =>{
+  PushNotification.createChannel(
+      {
+        channelId: "channel-id", // (required)
+        channelName: "My channel", // (required)
+        channelDescription: "A channel to categorise your notifications", // (optional) default: undefined.
+        playSound: true, // (optional) default: true
+        soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+        // importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+        vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+      },
+      (created:any) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+  )
+}
+
+const handleNotifications = (nameValue:string) => {
+  PushNotification.localNotification({
+    channelId: 'channel-id', // (required)
+    title: `You entered the name ${nameValue} `,
+    message: `Yes, you did it bro!. The name is ${nameValue}`,
+  })
+}
 
 const getData = async () =>{
   try {
@@ -75,7 +100,9 @@ const handleFormSubmit = async () => {
            <MyButton
           title="Submit"
           onPressFunction ={handleFormSubmit} />
-
+          <MyButton
+          title="Press Notification"
+          onPressFunction ={()=> { handleNotifications(nameValue)}} />
           {/* <Button title='sign up'  onPress={handleFormSubmit} /> */}
         </View>
     </View>
