@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1046564105731",
+    "project_id": "react-native-remote-push",
+    "storage_bucket": "react-native-remote-push.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046564105731:android:2e535b45f28fb984306836",
+        "android_client_info": {
+          "package_name": "com.mrhenshawnew"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046564105731-91lt6erle0k8qlmfcg942mjfv6djcilu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIdzTzFRIcPsRDePReKYm0yJclkZ_GHPQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046564105731-91lt6erle0k8qlmfcg942mjfv6djcilu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
