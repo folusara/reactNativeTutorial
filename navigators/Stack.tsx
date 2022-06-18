@@ -12,12 +12,14 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ProductsScreen from '../screens/Products';
 import ProductInfoScreen from '../screens/ProductInfo';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import Map from '../screens/Map';
 
 export type ParamList = {
     Home: undefined;
     Login: undefined;
     Products: undefined
     ProductInfo: undefined
+    Map: undefined
   };
 
 const {Navigator, Screen} = createBottomTabNavigator<ParamList>();
@@ -63,9 +65,19 @@ const Stack = () => {
           name="Login"
           component={LoginScreen}
           options={{
-            tabBarLabel: 'ProductInfo',
+            tabBarLabel: 'Login',
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+          }}
+        />
+         <Screen
+          name="Map"
+          component={Map}
+          options={{
+            tabBarLabel: 'Map',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="map" color={color} size={size} />
             ),
           }}
         />

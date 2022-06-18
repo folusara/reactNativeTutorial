@@ -87,7 +87,9 @@ const handleFormSubmit = async () => {
       // await AsyncStorage.setItem('User', JSON.stringify(formData))
       dispatch(setName(nameValue))
       dispatch(setCount(1))
-      navigation.navigate('Home')
+      navigation.navigate('Map',{
+        city: name,
+      })
     } catch (error) {
       console.log(error);
     }
