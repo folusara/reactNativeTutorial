@@ -9,8 +9,8 @@ function MyButton(props) {
             hitSlop={{top:10, bottom:10, right:10, left:10}} 
             android_ripple={{color: '#00f'}}
             style={({pressed})=>[
-                {backgroundColor: pressed ? '#dddddd': '#00ff00'},
-                styles.button
+                {backgroundColor:  '#1eb900'},
+                styles.button,
             ]}>
                 <Text style={styles.text}>
                     {props.title}
@@ -21,13 +21,13 @@ function MyButton(props) {
 
 const styles = StyleSheet.create({
     button:{
-        width:300,
+        width: '90%',
         height: 50,
         borderRadius:10,
         margin:20
     },
     text:{
-        color:'#000000',
+        color:'#ffff',
         fontSize: 20,
         margin: 10,
         textAlign: 'center',
